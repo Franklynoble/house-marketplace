@@ -1,17 +1,24 @@
-import{useState, useEffect} from 'react'
+import{useState} from 'react'
 import { getAuth } from 'firebase/auth';
+import {db} from '../firebase.config'
+import { updateDoc } from 'firebase/firestore';
 import { useNavigate , Link } from 'react-router-dom';
 
 const Profile = () => {
 
-  const navigate = useNavigate
-
+ 
   const auth = getAuth()
 
+  const [changeDetails, setChangeDetails] = useState ( false)
+
   const [formData, setFormData] = useState({
+
     name : auth.currentUser.displayName,
     email: auth.currentUser.email,
   })
+
+  const { name, email } = formData
+  const navigate = useNavigate
 
   const logOut =() =>  {
 
@@ -19,10 +26,19 @@ const Profile = () => {
     navigate('/')
   }
 
+  const onSubmit = () => {
+    console.log(123)
 
+  }
+  const onChange =(e) => {
+    // e.preventDefault()
 
-
-
+    setFormData((prevState) => ({
+      ...prevState,
+      [e.target.id]: e.target.value,
+    }))
+    
+  }
 
    return <div className='profile'>
 
@@ -31,6 +47,37 @@ const Profile = () => {
        <button type='button' className='logOut' onClick={logOut}>LogOut </button>
        
               </header>
+
+               <main>
+   <div className="profileDetailsHeader">
+
+      <p className="profileDetailsText">Personal Details</p>
+      <p className="changePersonalDetails" onClick={ () => {
+            changeDetails && onSubmit () 
+        setChangeDetails((prevState) => !prevState)
+
+      }}>
+        {changeDetails ? 'done' : 'change'}
+      </p>
+
+
+   </div>
+
+   <dive classN ame="profileCard">
+
+<form>
+
+  <input type="text" 
+   id='name'
+   className={!changeDetails ? 'profileName' : 'profileNameActive'}
+    disabled={!changeDetails} 
+    value={name}
+     onChange={onChange}/>
+
+</form>
+
+   </dive>
+         </main>
 
 
    </div>
