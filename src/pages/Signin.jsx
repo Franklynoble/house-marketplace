@@ -1,12 +1,16 @@
 import { useState } from "react";
+import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
 import { Link, useNavigate } from "react-router-dom";
 import {ReactComponent as ArrowRightIcon} from '../assets/svg/keyboardArrowRightIcon.svg';
-
+import 'react-toastify/dist/ReactToastify.css';
 import visibilityIcon from '../assets/svg/visibilityIcon.svg';
+import { toast } from "react-toastify";
 
 const Signin = () => {
    //set the states
    const [showPassword, setShowPassword] = useState (false);
+
+   const navigate = useNavigate();
 
    const [formData, setFormData] = useState( {
       email: '',
@@ -22,6 +26,30 @@ const Signin = () => {
       }))
  }
 
+ const onSubmit = async (e) => {
+      e.preventDefault()
+
+
+      try {
+      const auth = getAuth()
+
+
+      const userCredential = await signInWithEmailAndPassword (
+       auth,
+       email,
+       password
+             )
+
+             if (userCredential.user) {
+                  navigate('/profile')
+             }
+      }catch(err) {
+            toast.error('Bad User Credentials')
+      }
+     
+
+ }
+
 
      return ( 
   <>
@@ -31,8 +59,9 @@ const Signin = () => {
             <p className="pageHeader"> Welcome Back!</p>
       </header>
       <main>
-            <form>
+            <form onSubmit={ onSubmit}>
                   <input type='email' 
+                   autoComplete="on"
                   className="emailInput" 
                   placeholder="email"
                    id="email"
@@ -42,6 +71,7 @@ const Signin = () => {
                   <div className="passwordInputDiv">
 
                         <input 
+                          autoComplete="off"
                         type={showPassword ? 'text' : 'password'}
                         className='passwordInput'
                         placeholder="Password"
@@ -61,7 +91,7 @@ const Signin = () => {
                          Forgot Password 
                          </Link>
 
-                         <div className="sigInBar"></div>
+                         <div className="sigInNav"></div>
                           <p className="signInText">
                               Sign In
                           </p>
