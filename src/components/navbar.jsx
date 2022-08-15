@@ -7,7 +7,7 @@ const Navbar = () => {
 const navigate = useNavigate()
 const location = useLocation()
 
-const pathMatchRoute = (route) => {
+const   pathMatchRoute = (route) => {
      if(route === location.pathname) {
           return true
      }
@@ -22,7 +22,7 @@ const pathMatchRoute = (route) => {
 <ul className='navbarListItems'>
   <li  className='navbarListItem' onClick={ () => navigate ('/')}>
 
-   <ExploreIcon fill={pathMatchRoute('/')? '#2c2c2c' : '#8f8f8f'} width='36px' height='36px' on />
+   <ExploreIcon fill={pathMatchRoute('/')? '#2c2c2c' : '#8f8f8f'} width='36px' height='36px' />
    <p className= {pathMatchRoute('/')? 'navbarListItemNameActive' : 'navbarListItemName'}>Explore</p>
   </li>
 
