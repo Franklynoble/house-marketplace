@@ -5,6 +5,7 @@ import {ReactComponent as ArrowRightIcon} from '../assets/svg/keyboardArrowRight
 import 'react-toastify/dist/ReactToastify.css';
 import visibilityIcon from '../assets/svg/visibilityIcon.svg';
 import { toast } from "react-toastify";
+import OAuth from "../components/OAuth";
 
 const Signin = () => {
    //set the states
@@ -99,7 +100,7 @@ const Signin = () => {
                               <ArrowRightIcon fill="#ffffff" width='34px' height='34px'/>                          </button>
             </form>
       </main>
-    {/* Google Auth */}
+     <OAuth/>
      <Link to ='/sign-up' className="registerLink">
        Sign Up Instead
      </Link>
